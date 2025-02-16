@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "38580286562",
+    "project_id": "mmcaller",
+    "storage_bucket": "mmcaller.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:38580286562:android:9bae55291994b041838d3b",
+        "android_client_info": {
+          "package_name": "com.orhan"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyARDA4rKPxWGWgcInFWB_IDKYrSy-GY3DA"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

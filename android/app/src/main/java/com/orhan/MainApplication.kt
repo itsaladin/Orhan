@@ -1,5 +1,5 @@
 package com.orhan
-
+import com.oblador.vectoricons.VectorIconsPackage;
 import android.app.Application
 import com.facebook.react.PackageList
 import com.facebook.react.ReactApplication
@@ -19,7 +19,7 @@ class MainApplication : Application(), ReactApplication {
         override fun getPackages(): List<ReactPackage> =
             PackageList(this).packages.apply {
               // Packages that cannot be autolinked yet can be added manually here, for example:
-              // add(MyReactNativePackage())
+              // add(MyReactNativePackage()) 
             }
 
         override fun getJSMainModuleName(): String = "index"
