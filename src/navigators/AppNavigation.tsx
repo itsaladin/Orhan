@@ -5,7 +5,7 @@ import {
 } from '@zegocloud/zego-uikit-prebuilt-call-rn';
 import React, {useEffect, useState} from 'react';
 import {ActivityIndicator, StatusBar, useColorScheme, View} from 'react-native';
-import ActiveUser from '../screens/ActiveUser';
+import ActiveUser from '../screens/call/ActiveUser';
 import HomeScreen from '../screens/HomeScreen';
 import LoginScreen from '../screens/auth/LoginScreen';
 import RegisterScreen from '../screens/auth/RegisterScreen';
@@ -64,9 +64,21 @@ export default function AppNavigation() {
         name="HomeScreen"
         component={HomeScreen}
       />
-      <Stack.Screen name="LoginScreen" component={LoginScreen} />
-      <Stack.Screen name="Active User" component={ActiveUser} />
-      <Stack.Screen name="Register User" component={RegisterScreen} />
+      <Stack.Screen
+        options={{headerShown: false}}
+        name="LoginScreen"
+        component={LoginScreen}
+      />
+      <Stack.Screen
+        options={{headerShown: false}}
+        name="Active User"
+        component={ActiveUser}
+      />
+      <Stack.Screen
+        options={{headerShown: false}}
+        name="Register User"
+        component={RegisterScreen}
+      />
 
       {/* @ts-ignore */}
       <Stack.Screen

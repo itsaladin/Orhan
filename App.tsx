@@ -9,8 +9,8 @@ export default function App() {
   return (
     <NavigationContainer>
       <ZegoCallInvitationDialog />
-      <AppNavigation />
       <ZegoUIKitPrebuiltLiveStreamingFloatingMinimizedView />
+      <AppNavigation />
     </NavigationContainer>
   );
 }

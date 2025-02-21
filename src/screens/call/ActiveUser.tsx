@@ -1,9 +1,17 @@
 import firestore from '@react-native-firebase/firestore';
 import {ZegoSendCallInvitationButton} from '@zegocloud/zego-uikit-prebuilt-call-rn';
 import React, {useEffect, useState} from 'react';
-import {FlatList, StyleSheet, Text, View} from 'react-native';
-import EmptyComponent from '../components/EmptyMessage';
-import {getUserInfo} from '../services/LocalStorage';
+import {
+  Alert,
+  BackHandler,
+  FlatList,
+  StyleSheet,
+  Text,
+  TouchableOpacity,
+  View,
+} from 'react-native';
+import EmptyComponent from '../../components/EmptyMessage';
+import {getUserInfo} from '../../services/LocalStorage';
 
 function ActiveUser({navigation}) {
   const [users, setUsers] = useState([]);
@@ -32,6 +40,29 @@ function ActiveUser({navigation}) {
     setRefreshing(false);
   };
 
+  const handleBackPress = () => {
+    Alert.alert(
+      'Hold on!',
+      'Are you sure you want to go back?',
+      [
+        {text: 'Cancel', onPress: () => null, style: 'cancel'},
+        {text: 'Yes', onPress: () => BackHandler.exitApp()},
+      ],
+      {cancelable: false},
+    );
+    return true; // Prevent default behavior (e.g., closing the app)
+  };
+
+  // Add the event listener when the component mounts
+  useEffect(() => {
+    BackHandler.addEventListener('hardwareBackPress', handleBackPress);
+
+    // Clean up the event listener when the component unmounts
+    return () => {
+      BackHandler.removeEventListener('hardwareBackPress', handleBackPress);
+    };
+  }, []);
+
   return (
     <View style={styles.container}>
       <FlatList
@@ -57,6 +88,15 @@ function ActiveUser({navigation}) {
                     ]}
                     isVideoCall={false}
                     resourceID={'MMCaller'} // Unique resource ID for the call
+                    onSuccess={() => {
+                      console.log('Call invitation sent successfully!');
+                    }}
+                    onFailed={error => {
+                      console.log('Failed to send call invitation:', error);
+                    }}
+                    onCancel={() => {
+                      console.log('Call invitation canceled.');
+                    }}
                   />
                 </View>
 
@@ -66,6 +106,15 @@ function ActiveUser({navigation}) {
                   ]}
                   isVideoCall={true}
                   resourceID={'MMCaller'} // Unique resource ID for the call
+                  onSuccess={() => {
+                    console.log('Call invitation sent successfully!');
+                  }}
+                  onFailed={error => {
+                    console.log('Failed to send call invitation:', error);
+                  }}
+                  onCancel={() => {
+                    console.log('Call invitation canceled.');
+                  }}
                 />
               </View>
             </View>
@@ -74,6 +123,14 @@ function ActiveUser({navigation}) {
         refreshing={refreshing}
         onRefresh={handleRefresh}
       />
+
+      <TouchableOpacity
+        style={styles.buttonBack}
+        onPress={() => {
+          navigation.navigate('HomeScreen');
+        }}>
+        <Text style={styles.buttonText}>Got to home page</Text>
+      </TouchableOpacity>
     </View>
   );
 }
@@ -149,5 +206,19 @@ const styles = StyleSheet.create({
     textAlign: 'center',
     marginBottom: 24,
     color: '#333',
+  },
+  buttonBack: {
+    height: 50,
+    borderRadius: 10,
+    backgroundColor: '#007BFF',
+    justifyContent: 'center',
+    alignItems: 'center',
+    marginHorizontal: 5,
+    marginTop: 50,
+  },
+  buttonText: {
+    fontSize: 16,
+    fontWeight: 'bold',
+    color: '#FFF',
   },
 });

@@ -1,6 +1,7 @@
 import {useNavigation} from '@react-navigation/native';
 import React, {useEffect, useState} from 'react';
 import {
+  Alert,
   BackHandler,
   StyleSheet,
   Text,
@@ -24,15 +25,26 @@ const HomeScreen = () => {
     fetchUsers();
   }, []);
 
-  useEffect(() => {
-    const backhandler = BackHandler.addEventListener(
-      'hardwareBackPress',
-      () => {
-        return true;
-      },
+  const handleBackPress = () => {
+    Alert.alert(
+      'Hold on!',
+      'Are you sure you want to go back?',
+      [
+        {text: 'Cancel', onPress: () => null, style: 'cancel'},
+        {text: 'Yes', onPress: () => BackHandler.exitApp()},
+      ],
+      {cancelable: false},
     );
+    return true; // Prevent default behavior (e.g., closing the app)
+  };
+
+  // Add the event listener when the component mounts
+  useEffect(() => {
+    BackHandler.addEventListener('hardwareBackPress', handleBackPress);
+
+    // Clean up the event listener when the component unmounts
     return () => {
-      backhandler.remove();
+      BackHandler.removeEventListener('hardwareBackPress', handleBackPress);
     };
   }, []);
 
